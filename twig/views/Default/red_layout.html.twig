@@ -1,0 +1,274 @@
+{% set css = asset('bundles/eopblog/css/') %}
+{% set js = asset('bundles/eopblog/js/') %}
+{% set images = asset('bundles/eopblog/images/') %}
+{% set download = asset('bundles/eopblog/download/') %}
+{% set adr = "http://teff-old" %}
+{% set spaceReplace = "&nbsp; &nbsp;"%}
+
+{% if urlLangage is not defined %}
+    {% set urlLangage="#" %}
+{% endif %}
+
+
+{% set menu = {
+    "news"          : {"fr" : "news",               "en":"news"},
+    "home"          : {"fr" : "Uccle 2016",         "en":"Uccle 2016"},
+    "film"          : {"fr" : "films",              "en":"movies"},
+    "programme"     : {"fr" : "programme",          "en":"program"},
+    "tarif"         : {"fr" : "tarif & achat",      "en":"prices"},
+    "evenement"     : {"fr" : "evenements",         "en":"events"},
+    "invite"        : {"fr" : "invites",            "en":"guests"},
+    "jury"          : {"fr" : "jury & prix",        "en":"jury & awards"},
+    "presse"        : {"fr" : "presse",             "en":"press"},
+    "association"   : {"fr" : "l'association",      "en":"the organization"},
+    "photo"         : {"fr" : "galerie photos",     "en":"foto's gallery"},
+    "archive"       : {"fr" : "archives",           "en":"archives"},
+    "partenaire"    : {"fr" : "partenaires",        "en":"partners"},
+    "info"          : {"fr" : "infos pratiques",    "en":"practical informations"},
+    "contact"       : {"fr" : "contact",            "en":"contact"}
+} %}
+
+{% set footer = {
+    "partenariat"       : {"fr" : "En partenariat avec : ",     "en":"In partnership with : "},
+    "sponsoring"        : {"fr" : "Avec le sponsoring : ",      "en":"With the sponsoring : "},
+    "soutient"          : {"fr" : "Avec les soutiens : ",       "en":"With the supports : "},
+    "soutient2"         : {"fr" : "La region Wallonne, la Fédération Wallonie-Bruxelles, la Commission Communautaire Française des provinces de Namur, Hainaut et Luxembourg et de la Loterie Nationnale.",      "en":"The Walloon region, the Federation Wallonia-Brussels, the French Community Committee of the provinces of Namur, Hainaut and Luxembourg and the National Lottery."},
+    "media"             : {"fr" : "Les medias : ",              "en":"The medias : "},
+    "collaboration"     : {"fr" : "En collaboration avec : ",   "en":"In association with : "}
+} %}
+<html>
+    <head>
+        <title>{% block titre %}{% endblock %}</title>
+        <meta charset="UTF-8">
+        {% block css %}{% endblock %}
+        <link rel="stylesheet" href="{{css}}red_reset.css" media="screen" />
+        <link rel="stylesheet" href="{{css}}red_style.css" media="screen" />
+        <link rel="stylesheet" href="{{css}}red_styleXXL.css" media="screen and (min-width: 1400px)"  />
+        <link rel="stylesheet" href="{{css}}red_styleXL.css" media="screen and (max-width: 1399px)"  />
+        <link rel="stylesheet" href="{{css}}red_styleL.css" media="screen and (max-width: 967px)"  />
+        <link rel="stylesheet" href="{{css}}red_styleM.css" media="screen and (max-width: 650px)"  />
+        <link rel="stylesheet" href="{{css}}red_styleS.css" media="screen and (max-width: 497px)"  />
+        <script type="text/javascript" src="{{js}}jquery-1.9.1.min.js"></script>
+        <script type="text/javascript" src="{{js}}red_background.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/3.3.2/masonry.pkgd.min.js"></script>
+        
+        {% block js %}{% endblock %}
+        {% block partageFacebook %}{% endblock %}
+    </head>
+    <body style="background-image: url('{{css}}images/red/{{random(['Fond1', 'Fond2', 'Fond3'])}}.jpg'); ">
+        <!-- Load Facebook SDK for JavaScript -->
+        <div id="fb-root"></div>
+        <script>
+            (function(d, s, id) {
+              var js, fjs = d.getElementsByTagName(s)[0];
+              if (d.getElementById(id)) return;
+              js = d.createElement(s); js.id = id;
+              js.src = "//connect.facebook.net/fr_FR/all.js#xfbml=1";
+              fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+        </script>
+        <!-- End Load -->
+        <div class="header" {% if isArchive == 1 %}{% if annee<2015 %}style="height:40px; background-image: none;"{% endif %}{% endif %}>
+            <div class="drapeau">
+                <a href="{{urlLangage}}"><img src="{{images}}langues/{% if langue=="fr" %}en{% else %}fr{% endif %}.png"></a></div>
+                {% if isArchive == 1 %}
+                {% if annee==2015 %}
+                    <div class="edition">3<div>eme</div> EDITION</div>
+                {% endif %}{% endif %}
+                    
+                {% if annee==2015 %}
+                    <div class="dates">
+                        <div class="date">
+                            10/11/2015<br><br><br><br><br><br><span class="whiteText">11 > 15/11/2015</span>
+                        </div>
+                        <div class="verticalLine"></div>
+                        <div class="lieux">
+                            BRUXELLES<br>LIEGE<br>MONS<br>CHARLEROI<br>LIBRAMONT<br><br><span class="whiteText">NAMUR</span>
+                        </div>
+                    </div>
+                {% endif %}
+                {% if annee==2016 %}
+                    <div class="dates" style="width:650px">
+                        <div class="date">
+                            <span class="whiteText" style="font-size:1.7em">BRUXELLES</span><br><br><span style="font-size:1.3em">16-17/09/2016</span>
+                        </div>
+                        <div class="verticalLine"style="height:120px;"></div>
+                        <div class="lieux">
+                            <span class="whiteText" style="font-size:1.7em">UCCLE</span><br>
+                            <span style="font-size:1.7em">CENTRE<br>
+                                CULTUREL</span>
+                        </div>
+                        <div style="position:absolute; right:10px; top:35px;width:200px; height:100px;transform:rotate(40deg);-ms-transform:rotate(40deg); /* Internet Explorer */-moz-transform:rotate(40deg); /* Firefox */-webkit-transform:rotate(40deg); /* Safari et Chrome */-o-transform:rotate(40deg); /* Opera */">
+                            <div style="position:relative; top:0px; height:3px; width:200px;background-color:white; font-size:1px">&bnsp;</div>
+                            <div style="position:relative; top:0px; height:50px; width:200px; font-size:2.5em; color:white; font-weight:bold"><centre>&nbsp;BEST OF</centre></div>
+                            <div style="position:relative; top:-10px; height:3px; width:200px;background-color:white; font-size:1px">&bnsp;</div>
+                            <div style="position:relative; top:-10px; font-size:2em; color:white;">12 SEANCES</div>
+                        </div>
+                    </div>
+            {% endif %}
+        </div>
+        <div class="citation">
+            {% if isArchive == 1 %}
+                {% if annee==2015 %}
+                    <div class="block"><img src="{{images}}citations/citation{{random(2) + 1}}.png">
+                {% endif %}
+            {% endif %}
+            
+            </div>
+        </div>
+        <div class="menu">
+            <a id="menu-news" href="{{url_news}}" class="menuBtn shadow overGlow">{{menu["news"][langue]|replace({" ":spaceReplace})|raw}}</a>
+            <a id="menu-home" href="{{url_home}}" class="menuBtn shadow overGlow">{{menu["home"][langue]|replace({" ":spaceReplace})|raw}}</a>
+            <a id="menu-archive" href="{{url_archives}}" class="menuBtn shadow overGlow">{{menu["archive"][langue]|replace({" ":spaceReplace})|raw}}</a>
+            <a id="menu-association" href="{{url_association2016}}" class="menuBtn shadow overGlow">{{menu["association"][langue]|replace({" ":spaceReplace})|raw}}</a>
+            <a id="menu-contact" href="{{url_contact2016}}" class="menuBtn shadow overGlow">{{menu["contact"][langue]|replace({" ":spaceReplace})|raw}}</a>
+            <a href="http://www.facebook.com/extraordinaryfestival" target="_blank" class="menuBtn shadow">&nbsp;<img src="{{images}}followUs/facebook.jpg">&nbsp;</a>
+            <a href="https://twitter.com/TEFFFESTIVAL" target="_blank" class="menuBtn shadow">&nbsp;<img src="{{images}}followUs/twitter.jpg">&nbsp;</a>
+            <a href="https://www.youtube.com/channel/UCjd2kSVsGgXnoowSDJjd6hA" target="_blank" class="menuBtn shadow">&nbsp;<img src="{{images}}followUs/youtube.jpg">&nbsp;</a>
+            {% if isArchive == 1 %}
+                {% if annee==2015 %}
+                    <a id="menu-film" href="{{url_archive_2015_listeFilms}}" class="menuBtn shadow overGlow">{{menu["film"][langue]|replace({" ":spaceReplace})|raw}}</a>
+                    <a id="menu-programme" href="{{url_archive_2015_programme}}" class="menuBtn shadow overGlow">{{menu["programme"][langue]|replace({" ":spaceReplace})|raw}}</a>
+                    <a id="menu-tarif" href="{{url_archive_2015_billeterie}}" class="menuBtn shadow overGlow">{{menu["tarif"][langue]|replace({" ":spaceReplace})|raw}}</a>
+                    <a id="menu-evenement" href="{{url_archive_2015_evenements}}" class="menuBtn shadow overGlow">{{menu["evenement"][langue]|replace({" ":spaceReplace})|raw}}</a>
+                    <a id="menu-infopratiques" href="{{url_archive_2015_infosPratiques}}" class="menuBtn shadow overGlow">{{menu["info"][langue]|replace({" ":spaceReplace})|raw}}</a>
+                    <a id="menu-invites" href="{{url_archive_2015_invites}}" class="menuBtn shadow overGlow">{{menu["invite"][langue]|replace({" ":spaceReplace})|raw}}</a>
+                    <a id="menu-jury" href="{{url_archive_2015_jury}}" class="menuBtn shadow overGlow">{{menu["jury"][langue]|replace({" ":spaceReplace})|raw}}</a>
+                    <a id="menu-press" href="{{url_archive_2015_press}}" class="menuBtn shadow overGlow">{{menu["presse"][langue]|replace({" ":spaceReplace})|raw}}</a>
+                    <a id="menu-gallerie" href="{{url_archive_2015_gallerie}}" class="menuBtn shadow overGlow">{{menu["photo"][langue]|replace({" ":spaceReplace})|raw}}</a>
+                    <a id="menu-partenaires" href="{{url_archive_2015_partenaires}}" class="menuBtn shadow overGlow">{{menu["partenaire"][langue]|replace({" ":spaceReplace})|raw}}</a>
+                {% endif %}
+            {% endif %}
+        </div>
+        <div class="page">
+            <div style="float:none; padding:0px; display: block; min-width:480px;">
+                {% block body %}
+
+                {% endblock %}
+                {% if isFooterSoutientVisible == 0 %}
+                    
+                <div class="footer">
+                    Pierre Lenoble 
+                </div>
+                {% else %}   
+                    {% if isFooterSoutientVisible == 1 %}
+                <div class="blockMain espaceBlock" id="footerSoutiens">
+                    <div class="blockSoutiensLayout">
+                        <div class="titreSoutiensLayout">
+                            {{footer["partenariat"][langue]|replace({" ":spaceReplace})|raw}}
+                        </div>
+                        <div class="divImgSoutiensLayout">
+                            <div><img src="{{images}}soutiensMedia/cap48.png" alt ="Cap48"></div>
+                            <div><img src="{{images}}soutiensMedia/laUNE.png" alt ="La Une"></div>
+                            <div><img src="{{images}}soutiensMedia/vivacite.png" alt ="Vivacite"></div>
+                        </div>
+                    </div>
+                    <div class="blockSoutiensLayout" style="width:35px;">&nbsp;
+                    </div>
+                    <div class="blockSoutiensLayout">
+                        <div class="titreSoutiensLayout">
+                            {{footer["sponsoring"][langue]|replace({" ":spaceReplace})|raw}}
+                        </div>
+                        <div class="divImgSoutiensLayout">
+                            <div><img src="{{images}}soutiensMedia/euroMillion.png" alt ="EuroMillion"></div>
+                            <div><img src="{{images}}soutiensMedia/skoda.png" alt="Skoda"></div>
+                        </div>
+                    </div>
+                        
+                    <div style="float: none; clear: left"></div>
+                    
+                    <div class="titreSoutiensLayout" style="display: inline"><br><br>
+                        {{footer["soutient"][langue]|replace({" ":spaceReplace})|raw}}
+                    </div>
+                        {{footer["soutient2"][langue]}}<br>                    
+                    <div class="divImgSoutiensLayout">
+                        <div><img src="{{images}}soutiensMedia/AWIPH.png" alt="Awiph"></div>
+                        <div><img src="{{images}}soutiensMedia/phare.png" alt="Phare"></div>
+                        <div><img src="{{images}}soutiensMedia/fedBXL_Wall.png" alt="Fédération Wallonie Bruxelles"></div>
+                        <div><img src="{{images}}soutiensMedia/wallonie.png" alt="Wallonie"></div>
+                        <div><img src="{{images}}soutiensMedia/cocof.png" alt="Cocof"></div>
+                        <div><img src="{{images}}soutiensMedia/provNamur.png" alt="Province de Namur"></div>
+                        <div><img src="{{images}}soutiensMedia/villeNamur.png" alt="Ville de Namur"></div>
+                        <div><img src="{{images}}soutiensMedia/cultureNamur.png" alt="Namur Confluent Culture"></div>
+                        <div><img src="{{images}}soutiensMedia/wolluwe.png" alt="Woluwe St Pierre"></div>
+                        <div><img src="{{images}}soutiensMedia/luxembourg.png" alt="Luxembourg"></div>
+                        <div><img src="{{images}}soutiensMedia/hainaut.png" alt="Hainaut"></div>
+                        <div><img src="{{images}}soutiensMedia/lotterie.png" alt="Lotterie Nationnale"></div>
+                    </div>
+                    
+                    <div class="titreSoutiensLayout">
+                        {{footer["media"][langue]|replace({" ":spaceReplace})|raw}}
+                    </div>
+                    <div class="divImgSoutiensLayout">
+                        <div><img src="{{images}}soutiensMedia/canalC.png" alt ="Canal C"></div>
+                        <div><img src="{{images}}soutiensMedia/beTV.png" alt ="BeTV"></div>
+                        <div><img src="{{images}}soutiensMedia/brightfish.png" alt ="BrightFish"></div>
+                        <div><img src="{{images}}soutiensMedia/libre.png" alt ="Libre"></div>
+                        <div><img src="{{images}}soutiensMedia/DH.png" alt ="La DH"></div>
+                        <div><img src="{{images}}soutiensMedia/avenir.png" alt ="Vers l'Avenir"></div>
+                        <div><img src="{{images}}soutiensMedia/moustique.png" alt ="Moustique"></div>
+                    </div>
+                        
+                    <div class="titreSoutiensLayout">
+                        {{footer["collaboration"][langue]|replace({" ":spaceReplace})|raw}}
+                    </div>
+                    <div class="divImgSoutiensLayout">
+                        <div><img src="{{images}}soutiensMedia/logo51.png" alt ="Fifty-one Club"></div>
+                        <div><img src="{{images}}soutiensMedia/clubNamur.png" alt="club de Namur"></div>
+                        <div><img src="{{images}}soutiensMedia/alteo.png" alt ="Alteo"></div>
+                        <div><img src="{{images}}soutiensMedia/andage.png" alt ="Andage"></div>
+                        <div><img src="{{images}}soutiensMedia/droitsEnfants.png" alt ="Droits de l'Enfant"></div>
+                        <div><img src="{{images}}soutiensMedia/fondationLou.png" alt ="Fondation Lou"></div>
+                        <div><img src="{{images}}soutiensMedia/horizon2000.png" alt ="Horizon2000"></div>
+                        <div><img src="{{images}}soutiensMedia/lumiere.png" alt ="La Lumiere"></div>
+                        <div><img src="{{images}}soutiensMedia/passeMuraille.png" alt ="Passe-Muraille"></div>
+                        <div><img src="{{images}}soutiensMedia/audioscenic.png" alt="Audioscenic"></div>
+                        <div><img src="{{images}}soutiensMedia/amisAveugle.png" alt="Les Amis des Aveugle"></div>
+                        <div><img src="{{images}}soutiensMedia/creahm.png" alt="Creahm"></div>
+                        <div><img src="{{images}}soutiensMedia/infoAutisme.png" alt="Info Autisme"></div>
+                        <div><img src="{{images}}soutiensMedia/propa.png" alt="Propa"></div>
+                        <div><img src="{{images}}soutiensMedia/egerie.png" alt="Egerie"></div>
+                        <div><img src="{{images}}soutiensMedia/secondFloor.png" alt="Propa"></div>
+                        <div><img src="{{images}}soutiensMedia/alternative2.png" alt="Alternative"></div>
+                        <div><img src="{{images}}soutiensMedia/sleurs.jpg" alt="Elke Sleurs, Secrétaire d’Etat aux Personnes handicapées"></div>
+                        <div><img src="{{images}}soutiensMedia/cinematek.png" alt="Cinematek"></div>
+                        <div><img src="{{images}}soutiensMedia/sbc.png" alt="SBC"></div>
+                        <div><img src="{{images}}soutiensMedia/setisWallon.png" alt="Setis Wallon"></div>
+                    </div>
+                </div>
+                <div class="footer">
+                    Pierre Lenoble 
+                </div>
+                    {% else %}   
+                    {% if isFooterSoutientVisible == 2016 %}
+                         <div class="blockMain espaceBlock" id="footerSoutiens">
+                    
+                        
+                    <div class="titreSoutiensLayout">
+                        {{footer["soutient"][langue]|replace({" ":spaceReplace})|raw}}
+                    </div>
+                    <div class="divImgSoutiensLayout">
+                        <br>
+                        <div><img src="{{images}}soutiens2016/vivacite.jpg" alt="vivacite"></div>
+                        <div><img src="{{images}}soutiens2016/Bruxelles.jpg" alt ="Bruxelles"></div>
+                        <div><img src="{{images}}soutiens2016/Uccle.jpg" alt="Uccle"></div>
+                        <div><img src="{{images}}soutiens2016/phare.png" alt ="phare"></div>
+                        <div><img src="{{images}}soutiens2016/cocof.png" alt ="cocof"></div>
+                        <div><img src="{{images}}soutiens2016/cap48.png" alt ="cap48"></div>
+                        <div><img src="{{images}}soutiens2016/VivireIci.jpg" alt ="VivreIci"></div>
+                        <div><img src="{{images}}soutiens2016/eop.jpg" alt ="eop"></div>
+                        <div><img src="{{images}}soutiens2016/propa.png" alt ="propa"></div>
+                        <div><img src="{{images}}soutiens2016/flcpf.jpg" alt="flcpf"></div>
+                        <div><img src="{{images}}soutiens2016/FIFH.jpg" alt="flcpf"></div>
+                    </div>
+                </div>
+                        <div class="footer">
+                            Pierre Lenoble
+                        </div>
+                    
+                {% endif %}{% endif %}{% endif %}
+                
+            </div>
+        </div>
+    </body>
+</html>
