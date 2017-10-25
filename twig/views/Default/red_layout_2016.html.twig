@@ -1,0 +1,108 @@
+{% set css = adress ~ 'www/css/' %}
+{% set js = adress ~ 'www/js/' %}
+{% set images = adress ~ 'www/images/' %}
+{% set download = adress ~ 'www/download/' %}
+{% set spaceReplace = "&nbsp; &nbsp;"%}
+
+{% if urlLangage is not defined %}
+    {% set urlLangage="#" %}
+{% endif %}
+
+{% set footer = {
+    "partenariat"       : {"fr" : "En partenariat avec : ",     "en":"In partnership with : "},
+    "sponsoring"        : {"fr" : "Avec le sponsoring : ",      "en":"With the sponsoring : "},
+    "soutient"          : {"fr" : "Avec les soutiens : ",       "en":"With the supports : "},
+    "soutient2"         : {"fr" : "La region Wallonne, la Fédération Wallonie-Bruxelles, la Commission Communautaire Française des provinces de Namur, Hainaut et Luxembourg et de la Loterie Nationnale.",      "en":"The Walloon region, the Federation Wallonia-Brussels, the French Community Committee of the provinces of Namur, Hainaut and Luxembourg and the National Lottery."},
+    "media"             : {"fr" : "Les medias : ",              "en":"The medias : "},
+    "collaboration"     : {"fr" : "En collaboration avec : ",   "en":"In association with : "}
+} %}
+
+<html>
+    <head>
+        <title>{% block titre %}{% endblock %}</title>
+        <meta charset="UTF-8">
+        {% block css %}{% endblock %}
+        <link rel="stylesheet" href="{{css}}red_reset.css" media="screen" />
+        <link rel="stylesheet" href="{{css}}red_style.css" media="screen" />
+        <link rel="stylesheet" href="{{css}}red_styleXXL.css" media="screen and (min-width: 1400px)"  />
+        <link rel="stylesheet" href="{{css}}red_styleXL.css" media="screen and (max-width: 1399px)"  />
+        <link rel="stylesheet" href="{{css}}red_styleL.css" media="screen and (max-width: 967px)"  />
+        <link rel="stylesheet" href="{{css}}red_styleM.css" media="screen and (max-width: 650px)"  />
+        <link rel="stylesheet" href="{{css}}red_styleS.css" media="screen and (max-width: 497px)"  />
+        <script type="text/javascript" src="{{js}}jquery-1.9.1.min.js"></script>
+        <script type="text/javascript" src="{{js}}red_background.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/3.3.2/masonry.pkgd.min.js"></script>
+        
+        {% block js %}{% endblock %}
+        {% block partageFacebook %}{% endblock %}
+    </head>
+    <body style="background-image: url('{{images}}/background/{{random(['Fond1', 'Fond2', 'Fond3'])}}.jpg'); ">
+        <div class="header">
+            <div class="drapeau">
+                <a href="{{urlLangage}}"><img src="{{images}}langues/{% if langue=="fr" %}en{% else %}fr{% endif %}.png"></a>
+            </div>
+                
+            <div class="dates" style="width:650px">
+                <div class="date">
+                    <span class="whiteText" style="font-size:1.7em">BRUXELLES</span><br><br><span style="font-size:1.3em">16-17/09/2016</span>
+                </div>
+                <div class="verticalLine"style="height:120px;"></div>
+                <div class="lieux">
+                    <span class="whiteText" style="font-size:1.7em">UCCLE</span><br>
+                    <span style="font-size:1.7em">CENTRE<br>
+                        CULTUREL</span>
+                </div>
+            </div>
+        </div>
+        <div class="menu">
+            {% for menuItem in menu %}
+            <a id="menu-{{menuItem["text"]|replace({" ":"_"})|raw}}" href="{{menuItem["url"]|raw}}" class="menuBtn shadow overGlow">{{menuItem["text"]|replace({" ":spaceReplace})|raw}}</a>
+            {% endfor %}
+            <a href="http://www.facebook.com/extraordinaryfestival" target="_blank" class="menuBtn shadow">&nbsp;<img src="{{images}}followUs/facebook.jpg">&nbsp;</a>
+            <a href="https://twitter.com/TEFFFESTIVAL" target="_blank" class="menuBtn shadow">&nbsp;<img src="{{images}}followUs/twitter.jpg">&nbsp;</a>
+            <a href="https://www.youtube.com/channel/UCjd2kSVsGgXnoowSDJjd6hA" target="_blank" class="menuBtn shadow">&nbsp;<img src="{{images}}followUs/youtube.jpg">&nbsp;</a>
+            {% if menuArchive|length > 0 %}
+                <hr><center>Archive {{editionYear }}</center><hr>
+                {% for menuItem in menuArchive %}
+                <a id="menu-{{menuItem["text"]|replace({" ":""})|raw}}" href="{{menuItem["url"]|raw}}" class="menuBtn shadow overGlow" {% if menuItem["normal"] == 0 %}style="text-align: left; font-size: 1em;"{%endif%}>{{menuItem["text"]|replace({" ":spaceReplace})|raw}}</a>
+                {% endfor %}
+            {% endif %}
+            
+            
+            
+        </div>
+        <div class="page">
+            <div style="float:none; padding:0px; display: block; min-width:480px;">
+                {% block body %}
+
+                {% endblock %}
+                
+                <div class="blockMain espaceBlock" id="footerSoutiens">
+
+                    <div class="titreSoutiensLayout">
+                        {{traduction["soutiens"]|replace({" ":spaceReplace})|raw}}
+                    </div>
+                    <div class="divImgSoutiensLayout">
+                        <br>
+                        <div><img src="{{images}}soutiens2016/vivacite.jpg" alt="vivacite"></div>
+                        <div><img src="{{images}}soutiens2016/Bruxelles.jpg" alt ="Bruxelles"></div>
+                        <div><img src="{{images}}soutiens2016/Uccle.jpg" alt="Uccle"></div>
+                        <div><img src="{{images}}soutiens2016/phare.png" alt ="phare"></div>
+                        <div><img src="{{images}}soutiens2016/cocof.png" alt ="cocof"></div>
+                        <div><img src="{{images}}soutiens2016/cap48.png" alt ="cap48"></div>
+                        <div><img src="{{images}}soutiens2016/VivireIci.jpg" alt ="VivreIci"></div>
+                        <div><img src="{{images}}soutiens2016/eop.jpg" alt ="eop"></div>
+                        <div><img src="{{images}}soutiens2016/propa.png" alt ="propa"></div>
+                        <div><img src="{{images}}soutiens2016/flcpf.jpg" alt="flcpf"></div>
+                        <div><img src="{{images}}soutiens2016/FIFH.jpg" alt="flcpf"></div>
+                    </div>
+                </div>
+                    
+
+                <div class="footer">
+                    Pierre Lenoble
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

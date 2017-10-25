@@ -1,0 +1,25 @@
+{% extends "Default/red_layout_" ~ editionYear ~".html.twig" %}
+{% set isFooterSoutientVisible = 0 %}
+
+{% block titre %}
+    {{ traduction["windowTitle"]|raw }}
+{% endblock %}
+{% block body %}
+    <div class="blockMain">
+        <p style="font-size:2em; text-align: center">
+            <b>
+                <img src="{{images}}smiley/deathNinja.png" style="width:54px; display: inline; margin-right: 15px;">
+                {{traduction["title"]|raw}}
+                <img src="{{images}}smiley/deathNinja2.png" style="width:54px; display:inline; margin-right:15px;">
+            </b>
+        </p>
+            <p style="font-size:1.5em; padding-top:60px;">
+                {{traduction["text"]|raw}}
+            </p>
+            <p style="text-align: right; font-size:1.5em">{{traduction["signature"]|raw}}</p>
+            
+        <div style="clear:left;"></div>
+    </div>
+        
+{% endblock %}
+

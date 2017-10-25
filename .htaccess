@@ -1,3 +1,4 @@
 Options +FollowSymLinks
 RewriteEngine on
-ErrorDocument 404 /TEFF/rewriting.php
+RewriteRule ^$ /app.php [L]
+ErrorDocument 404 /app.php

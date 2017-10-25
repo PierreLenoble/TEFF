@@ -1,6 +1,15 @@
 <?php
-// Controller
-require_once './controller/defaultController.php';
+
+session_start();
+
+// Init
+if (!isset($_SESSION["langage"])) {
+    $_SESSION["langage"] = "fr";
+}
+
+if (!isset($_SESSION["editionYear"])) {
+    $_SESSION["editionYear"] = "2016";
+}
 
 // Routing
 include_once './utils/routing/route.php';
@@ -9,20 +18,22 @@ include_once './utils/routing/config.php';
 
 // Twig
 require_once './twig/vendor/autoload.php'; 
-
 $loader = new Twig_Loader_Filesystem('./twig/views/');
 $twig = new Twig_Environment($loader);
 
 // Routing
-$pageUrl = str_replace("/TEFF/", "", $_SERVER['REQUEST_URI']);      //  <----
+$pageUrl = $_SERVER['REQUEST_URI'];
 $routeName = RouteCollection::getNameRouteMatch($pageUrl);
 $route = RouteCollection::getRoute($routeName);
-$routePath = $route->getPath(); 
 
 if (empty($routeName)) {
-    DefaultController::Error404Error();
-} else {
     
+    require_once './controller/errorController.php';
+    ErrorController::init($twig, "error404", $pageUrl);
+    ErrorController::Error404();
+} else {
+    $route = RouteCollection::getRoute($routeName);
+    $routePath = $route->getPath(); 
     $arrayPageUrl = explode("/", $pageUrl);
     $arrayRoutePath = explode("/", $routePath);
     $arrayParam = array();
@@ -33,24 +44,15 @@ if (empty($routeName)) {
             $arrayParam[$tmp] = $arrayPageUrl[$key];
         }
     }
-    print_r($arrayParam);
-    
-    
-    
+        
     $controllerFunction = RouteCollection::getRoute($routeName)->getController();
     $controller = substr($controllerFunction, 0, strpos($controllerFunction, ":"));
-    $function = substr($controllerFunction, strlen($controller)+2) . "Action";
+    $function = substr($controllerFunction, strlen($controller)+2) . "_Action";
     
     require_once './controller/'.$controller.'.php';
-    echo $controller."::setTwig";
+    
     call_user_func_array($controller."::init", array($twig, $routeName, $pageUrl));
     call_user_func_array(array($controller, $function), $arrayParam);
-    // envoyer les différent parametre au controller;
-//    
-//    
-//    $controller::$twig = $twig;
-//    $controller::$function();
-    
 }
 
 
